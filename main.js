@@ -2,6 +2,10 @@ let airport_origin = []
 let airport_dest = []
 let resultTextarea = ""
 
+const clearTextarea = () => {
+    document.getElementById("resultTextarea").value = ""
+}
+
 const updateTextarea = (newValue) => {
     resultTextarea = document.getElementById("resultTextarea").value
     document.getElementById("resultTextarea").value = resultTextarea + newValue + "\n"
