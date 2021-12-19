@@ -7,17 +7,53 @@
     <title>Ryanair flight advisor</title>
   </head>
   <body>
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col">
-              One of three columns
+    <div class="container" style="max-width: fit-content;">
+        <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+          <h1>Ryanair flight advisor</h1>
+        </div>
+        <div class="row mx-auto">
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="outboundDateFrom">
+                <label for="outboundDateFrom">Wylot od:</label>
+              </div>
             </div>
-            <div class="col">
-              One of three columns
+            <div class="col-md">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="outboundDateTo">
+                <label for="outboundDateTo">Wylot do:</label>
+              </div>
             </div>
-            <div class="col">
-              One of three columns
+          </div>
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="airport_origin" placeholder="Miejsca wylotu">
+                <label for="airport_origin">Miejsca wylotu</label>
+              </div>
             </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="airport_dest" placeholder="Miejsca przylotu">
+                <label for="airport_dest">Miejsca przylotu</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="d-grid gap-2 col-2 mx-auto g-3">
+              <button type="button" class="btn btn-primary btn-lg" onclick="preSearchFlight()">Szukaj!</button>
+            </div>
+          </div>
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-floating">
+                <textarea class="form-control" style="height: 40vh;" id="resultTextarea" readonly></textarea>
+                <label for="resultTextarea">Wyniki:</label>
+              </div>
+              <a href="airport_codes" class="link-primary">Lista kodów krajów</a>
+            </div>
+          </div>
         </div>
     </div>
     <script src="main.js"></script>
