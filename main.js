@@ -20,9 +20,9 @@ const preSearchFlight = async () =>{
 
     for(let origins = 0; origins < airport_origin.length; origins++){
         for(let dests = 0; dests < airport_dest.length; dests++){
-            result = "Szukam lotów z: " + airport_origin[origins] + " do: " + airport_dest[dests]
+            result = "Szukam lotów z: " + airport_origin[origins].toUpperCase() + " do: " + airport_dest[dests].toUpperCase()
             updateTextarea(result)
-            await searchFlight(airport_origin[origins], airport_dest[dests], outboundDateFrom, outboundDateTo)
+            await searchFlight(airport_origin[origins].toUpperCase(), airport_dest[dests].toUpperCase(), outboundDateFrom, outboundDateTo)
         }
     }
 }
