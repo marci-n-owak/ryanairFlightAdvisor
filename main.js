@@ -2,6 +2,24 @@ let airport_origin = []
 let airport_dest = []
 let resultTextarea = ""
 
+const convertCurrency = (value, currency) =>{
+    switch (currency) {
+        case "EUR":
+            value = value * 4.63
+            break;
+        case "GBP":
+            value = value * 5.45
+            break;
+        case "USD":
+            value = value * 4.12
+            break;
+        default:
+            value = "Policz samemu :/"
+            break;
+    }
+    return Math.round(value * 100) / 100
+}
+
 const clearTextarea = () => {
     document.getElementById("resultTextarea").value = ""
 }
@@ -45,8 +63,15 @@ const searchFlight = async (airport_origin, airport_dest, outboundDateFrom, outb
             departureDate = record.departureDate
             price_value = record.price.value
             price_currency = record.price.currencyCode
-            result = "Znaleziono: " + day + " (" + departureDate + "), za " + price_value + " " + price_currency
-            //console.log(result)
+
+            if(price_currency == "PLN"){
+                result = "Znaleziono: " + day + " (" + departureDate + "), za " + price_value + " " + price_currency
+            }
+            else{
+                price_pln = convertCurrency(price_value, price_currency)
+                result = "Znaleziono: " + day + " (" + departureDate + "), za " + price_value + " " + price_currency + " (" + price_pln + " PLN)"
+            }
+
             updateTextarea(result)
         }
     }
