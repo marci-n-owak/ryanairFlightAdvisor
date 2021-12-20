@@ -39,7 +39,7 @@ const convertCurrency = (value, currency) =>{
 }
 
 const clearTextarea = () => {
-    document.getElementById("resultTextarea").value = ""
+    document.getElementById("resultTextarea").innerHTML = ""
 }
 
 const updateTextarea = (newValue) => {
