@@ -7,8 +7,8 @@ const clearTextarea = () => {
 }
 
 const updateTextarea = (newValue) => {
-    resultTextarea = document.getElementById("resultTextarea").value
-    document.getElementById("resultTextarea").value = resultTextarea + newValue + "\n"
+    resultTextarea = document.getElementById("resultTextarea").innerHTML
+    document.getElementById("resultTextarea").innerHTML = resultTextarea + newValue + "\n"
 }   
 
 const preSearchFlight = async () =>{
