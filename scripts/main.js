@@ -124,24 +124,7 @@ const preSearchFlightAdvanced = async () =>{
     airport_dest = ["aho", "alc", "ath", "bcn", "bri", "bll", "bhx", "blq", "boh", "bts", "bds", "brs", "cag", "cah", "cta", "chq", "ork", "dub", "ema", "edi", "ein", "fao", "fez", "gro", "pik", "lpa", "kun", "suf", "ace", "lba", "lis", "ltn", "stn", "mad", "agp", "mla", "man", "rak", "mrs", "bgy", "ryg", "pmo", "pfo", "psr", "psa", "pdl", "opo", "cia", "fco", "svq", "snn", "nyo", "tfs", "tpf", "vlc", "zad"]
     flightList = ["2022-04-28", "2022-04-29", "2022-04-30"]
     
-    for(let origins = 0; origins < airport_origin.length; origins++){
-        for(let dests = 0; dests < airport_dest.length; dests++){
-        //if(flights == 0){
-            let foundFlight_0 = await loopSearch(origins, dests, flightList[0])
-            console.log(foundFlight_0)
-            if(foundFlight_0){
-                let foundFligh_1 = await loopSearch(foundFlight_0.destinationAirport, airport_dest, flightList[1])
-                if(foundFligh_1){
-                    let foundFlight_2 = await loopSearch(foundFligh_1.destinationAirport, airport_origin, flightList[2])
-                    if(foundFlight_2){
-                        console.log(foundFlight_0)
-                        console.log(foundFlight_1)
-                        console.log(foundFlight_2)
-                    }
-                }
-            }
-        }
-    }
+    await loopSearch(airport_origin, airport_dest, flightList[0])
 
     document.getElementById("loadingSpinner").hidden = true
 }
@@ -158,7 +141,7 @@ const loopSearch = async (airport_origin, airport_dest, flightDate) =>{
                 foundFlight.originAirport = airport_origin[origins].toUpperCase()
                 foundFlight.destinationAirport = airport_dest[dests].toUpperCase()
                 
-                return(foundFlight)
+                console.log(foundFlight)
             }
             else{return(null)}
         }

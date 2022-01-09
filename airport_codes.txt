@@ -50,6 +50,7 @@ Marseilles, France MRS
 Milan Bergamo, Italy BGY
 Oslo Rygge, Norway RYG
 Palermo, Italy PMO
+Paris, France CDG
 Paphos, Cyprus PFO
 Pescara, Italy PSR
 Pisa, Italy PSA
