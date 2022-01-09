@@ -1,7 +1,5 @@
 let airport_origin = []
 let airport_dest = []
-let resultTextarea = ""
-let flightQuantity = 0
 
 const colorTextareaText = (text) =>{
     let myDistance = "#"
@@ -48,6 +46,41 @@ const updateTextarea = (newValue) => {
     document.getElementById("resultTextarea").innerHTML = resultTextarea + newValue + "\n"
 }   
 
+const validInputs = async () =>{
+    let input_1 = document.getElementById("outboundDateFrom")
+    let input_2 = document.getElementById("outboundDateTo")
+    let input_3 = document.getElementById("airport_origin")
+    let input_4 = document.getElementById("airport_dest")
+    if(input_1.value == ""){
+        input_1.classList.add("is-invalid")
+    }
+    else{
+        input_1.classList.remove("is-invalid")
+    }
+    if(input_2.value == ""){
+        input_2.classList.add("is-invalid")
+    }
+    else{
+        input_2.classList.remove("is-invalid")
+    }
+    if(input_3.value == ""){
+        input_3.classList.add("is-invalid")
+    }
+    else{
+        input_3.classList.remove("is-invalid")
+    }
+    if(input_4.value == ""){
+        input_4.classList.add("is-invalid")
+    }
+    else{
+        input_4.classList.remove("is-invalid")
+    }
+
+    if(input_1.value != "" && input_2.value != "" && input_3.value != "" && input_4.value != ""){
+        await preSearchFlight()
+    }
+}
+
 const preSearchFlight = async () =>{
     document.getElementById("loadingSpinner").hidden = false
 
@@ -56,10 +89,10 @@ const preSearchFlight = async () =>{
     outboundDateFrom = document.getElementById("outboundDateFrom").value
     outboundDateTo = document.getElementById("outboundDateTo").value
 
-    airport_origin = ["KRK", "WRO", "POZ", "KTW"]
-    airport_dest = ["RAK", "BGY"]
-    outboundDateFrom = "2022-04-28"
-    outboundDateTo = "2022-04-29"
+    //airport_origin = ["KRK", "WRO", "POZ", "KTW"]
+    //airport_dest = ["RAK", "BGY"]
+    //outboundDateFrom = "2022-04-28"
+    //outboundDateTo = "2022-04-29"
 
     for(let origins = 0; origins < airport_origin.length; origins++){
         for(let dests = 0; dests < airport_dest.length; dests++){
@@ -108,94 +141,6 @@ const searchFlight = async (airport_origin, airport_dest, outboundDateFrom, outb
         let record = response_json.outbound.fares[x]
         if(record.unavailable == false){
             return(record)
-        }
-    }
-}
-
-const preSearchFlightAdvanced = async () =>{
-    document.getElementById("loadingSpinner").hidden = false
-
-    airport_origin = document.getElementById("airport_origin").value.split(/[ ,]+/)
-    airport_dest = document.getElementById("airport_dest").value.split(/[ ,]+/)
-    outboundDateFrom = document.getElementById("outboundDateFrom").value
-    outboundDateTo = document.getElementById("outboundDateTo").value
-
-    airport_origin = ["KRK", "WRO", "POZ", "KTW"]
-    airport_dest = ["aho", "alc", "ath", "bcn", "bri", "bll", "bhx", "blq", "boh", "bts", "bds", "brs", "cag", "cah", "cta", "chq", "ork", "dub", "ema", "edi", "ein", "fao", "fez", "gro", "pik", "lpa", "kun", "suf", "ace", "lba", "lis", "ltn", "stn", "mad", "agp", "mla", "man", "rak", "mrs", "bgy", "ryg", "pmo", "pfo", "psr", "psa", "pdl", "opo", "cia", "fco", "svq", "snn", "nyo", "tfs", "tpf", "vlc", "zad"]
-    flightList = ["2022-04-28", "2022-04-29", "2022-04-30"]
-    
-    for(let origins = 0; origins < airport_origin.length; origins++){
-        for(let dests = 0; dests < airport_dest.length; dests++){
-        //if(flights == 0){
-            let foundFlight_0 = await loopSearch(origins, dests, flightList[0])
-            console.log(foundFlight_0)
-            if(foundFlight_0){
-                let foundFligh_1 = await loopSearch(foundFlight_0.destinationAirport, airport_dest, flightList[1])
-                if(foundFligh_1){
-                    let foundFlight_2 = await loopSearch(foundFligh_1.destinationAirport, airport_origin, flightList[2])
-                    if(foundFlight_2){
-                        console.log(foundFlight_0)
-                        console.log(foundFlight_1)
-                        console.log(foundFlight_2)
-                    }
-                }
-            }
-        }
-    }
-
-    document.getElementById("loadingSpinner").hidden = true
-}
-const loopSearch = async (airport_origin, airport_dest, flightDate) =>{
-    for(let origins = 0; origins < airport_origin.length; origins++){
-        for(let dests = 0; dests < airport_dest.length; dests++){
-            let foundFlight = await searchFlight(airport_origin[origins].toUpperCase(), airport_dest[dests].toUpperCase(), flightDate, flightDate)
-            if(foundFlight != "No flights"){
-                day = foundFlight.day
-                arrivalDate = foundFlight.arrivalDate
-                departureDate = foundFlight.departureDate
-                price_value = foundFlight.price.value
-                price_currency = foundFlight.price.currencyCode
-                foundFlight.originAirport = airport_origin[origins].toUpperCase()
-                foundFlight.destinationAirport = airport_dest[dests].toUpperCase()
-                
-                return(foundFlight)
-            }
-            else{return(null)}
-        }
-    }
-}
-const searchFlightAdvanced = async (airport_origin, airport_dest, flightIndex, flightDate, flightQuantity) =>{
-    let response = await fetch(`https://www.ryanair.com/api/farfnd/3/oneWayFares/${airport_origin}/${airport_dest}/cheapestPerDay?outboundDateFrom=${flightDate}&outboundDateTo=${flightDate}`)
-    let response_json = await response.json()
-
-    if(response_json.outbound.minFare == null){return 1}
-
-    for(let x = 0; x < response_json.outbound.fares.length; x++){
-        let record = response_json.outbound.fares[x]
-        if(record.unavailable == false){
-            //cała logika
-            day = record.day
-            arrivalDate = record.arrivalDate
-            departureDate = record.departureDate
-            price_value = record.price.value
-            price_currency = record.price.currencyCode
-
-            if(flightIndex == 0){
-                result = flightIndex + "Znaleziono: " + day + " (" + departureDate + "), za " + price_value + " " + price_currency
-                console.log(result)
-                flightQuantity++
-                await searchFlightAdvanced(airport_origin, airport_dest, flightQuantity, flightDate, flightQuantity)
-            }
-            else if (flightIndex == flightQuantity-1){
-                result = flightIndex + "Znaleziono: " + day + " (" + departureDate + "), za " + price_value + " " + price_currency
-                console.log(result)
-            }
-            else{
-                result = flightIndex + "Znaleziono: " + day + " (" + departureDate + "), za " + price_value + " " + price_currency
-                console.log(result)
-                flightQuantity++
-                await searchFlightAdvanced(airport_dest, airport_dest, flightQuantity, flightDate, flightQuantity)
-            }
         }
     }
 }
