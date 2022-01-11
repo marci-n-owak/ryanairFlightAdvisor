@@ -110,7 +110,7 @@ const preSearchFlight = async () =>{
                     resultFlight = "Znaleziono: " + day + " (" + departureDate + "), za " + price_value + " " + price_currency
                     
                     if(price_value <= 100){
-                        resultFlight = colorTextareaText(result)
+                        resultFlight = colorTextareaText(resultFlight)
                     }
                 }
                 else{
@@ -118,7 +118,7 @@ const preSearchFlight = async () =>{
                     resultFlight = "Znaleziono: " + day + " (" + departureDate + "), za " + price_value + " " + price_currency + " (" + price_pln + " PLN)"
                     
                     if(price_pln <= 100){
-                        resultFlight = colorTextareaText(result)
+                        resultFlight = colorTextareaText(resultFlight)
                     }
                 }
 
